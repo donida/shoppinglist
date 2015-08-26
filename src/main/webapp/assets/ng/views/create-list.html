@@ -1,0 +1,123 @@
+<div class="row">
+  <div class="col-md-12">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+		  <h3 class="panel-title">{{ listTitle }}</h3>
+		</div>
+		<div class="panel-body">
+		  	<div class="row" data-ng-show="messages.length" data-ng-click="messages.splice(0,messages.length)">
+		  		<div class="col-md-12" data-ng-repeat="message in messages">
+			  		<span class="col-xs-12" data-ng-class="{'alert alert-danger': message.danger, 'alert alert-success': message.success}" > {{ message.text }}</span>
+				  	<br class="clearfix">
+		  		</div>
+		  	</div>
+			<div class="row">
+				<div class="col-md-3">
+					<div class="input-group productlist-inputgroup">
+					  <input type="text" class="form-control" placeholder="Nome" data-ng-model="name" aria-describedby="list-name" required="required">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="input-group productlist-inputgroup">
+					  <input type="text" class="form-control" placeholder="Descrição" data-ng-model="description" aria-describedby="list-description">
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="input-group productlist-inputgroup">
+						<div class="btn-group">
+						  <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    <span data-ng-if="category.id">{{ category.id + ' - ' + category.name }}</span>
+						    <span data-ng-if="!category.id">Selecione...</span>
+						    <span class="caret"></span>
+						  </button>
+						  <ul class="dropdown-menu">
+							<li data-ng-repeat="categoryItem in categories track by categoryItem.id">
+								<a href="#" data-ng-click="selectCategory(categoryItem);$event.preventDefault();">
+									<span>{{ categoryItem.id + ' - ' + categoryItem.name }}</span>
+									<span class="glyphicon glyphicon-trash delete-item-icon pull-right" aria-hidden="true" data-ng-click="deleteCategory(categoryItem);$event.stopPropagation();"></span>
+								</a>
+							</li>
+							<li><a href="#" data-ng-click="addCategory();$event.preventDefault();">Adicionar...</a></li>
+						  </ul>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+				  	<a class="btn btn-primary pull-right" href="#" role="button" data-ng-click="$event.preventDefault(); addItem();">
+				  		<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>  Selecionar Produtos »
+				  	</a>
+				</div>
+			</div>
+		</div>
+		<table class="table">
+			<thead class="product-list-head">
+				<tr>
+					<th>
+						<a href="#" data-ng-click="selectAll();$event.stopPropagation();">
+							<span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+						</a>
+					</th>
+					<th>#</th>
+					<th>Foto</th>
+					<th>Produto</th>
+					<th>Valor</th>
+					<th>Preço</th>
+					<th>Ações</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="item in items track by item.product.id" data-ng-click="tooglePurchased(item)" 
+					class="select-product-row" data-ng-class="{selected: item.purchased}">
+					<td>
+						<span class="glyphicon glyphicon-unchecked" aria-hidden="true" data-ng-hide="item.purchased"></span>
+						<span class="glyphicon glyphicon-check" aria-hidden="true" data-ng-show="item.purchased"></span>
+					</td>
+					<td>{{ item.product.id }}</td>
+					<td>
+						<img alt="Foto Produto" class="list-thumbnail" data-ng-src="{{ item.product.filename }}" data-ng-if="item.product.filename">
+					</td>
+					<td>{{ item.product.name }}</td>
+					<td>
+						<span class="pull-right" data-ng-hide="item.onEdition">R$ {{ item.product.value }}</span>
+					</td>
+					<td class="product-list-item-value" data-ng-click="toogleOnEdition(item); $event.stopPropagation();">
+						<span class="pull-right" data-ng-hide="item.onEdition">R$ {{ item.price }}</span>
+						<input type="number" class="form-control pull-right" aria-label="Valor (em Reais)" data-ng-model="item.editedValue" placeholder="R$ 00,00" data-ng-show="item.onEdition">
+					</td>
+					<td class="table-action-cell">
+						<button type="button" class="btn btn-success" data-ng-show="item.onEdition" data-ng-click="saveEditionValue(item); $event.stopPropagation();">
+		  					<span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>  Gravar »
+		  				</button>
+						<button type="button" class="btn btn-success" data-ng-hide="item.onEdition" data-ng-click="toogleOnEdition(item); $event.stopPropagation();">
+		  					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>  Editar »
+		  				</button>
+						<button type="button" class="btn btn-danger" data-ng-click="removeProduct(item);$event.stopPropagation();">
+							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  Apagar »
+						</button>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th colspan="1"></th>
+					<th colspan="2">Evolução: </th>
+					<th colspan="1">Valor Total: R$ {{ total() }}</th>
+					<th colspan="1">Valor Restante: R$ {{ residual() }}</th>
+					<th colspan="1">Valor Carrinho: R$ {{ cart() }}</th>
+					<th colspan="1"></th>
+				</tr>
+			</tfoot>
+		</table>
+		<div class="panel-footer">
+		  <p>
+		  	<a class="btn btn-danger" href="#/" role="button" data-ng-click="cancel()">
+		  		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>  Cancelar »
+		  	</a>
+		  	<a class="btn btn-success pull-right" href="#" role="button" data-ng-click="save(); $event.preventDefault();">
+		  		<span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>  Gravar »
+		  	</a>
+		  </p>
+		</div>
+	</div>
+  </div>
+</div>

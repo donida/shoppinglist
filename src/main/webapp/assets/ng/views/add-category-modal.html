@@ -1,0 +1,35 @@
+<div class="modal-header">
+	<div class="row">
+		<div class="col-md-6">
+			<h3 class="modal-title">Nova Categoria !!!</h3>
+		</div>
+	</div>
+</div>
+<div class="modal-body">
+  	<div class="row" data-ng-show="messages.length" data-ng-click="productForm.messages.splice(0,messages.length)">
+  		<div class="col-md-12" data-ng-repeat="message in messages">
+	  		<span class="col-xs-12" data-ng-class="{'alert alert-danger': message.danger, 'alert alert-success': message.success}" > {{ message.text }}</span>
+		  	<br class="clearfix">
+  		</div>
+  	</div>
+	<div>
+		<form action="#" role="form">
+			<div class="form-group" data-ng-show="id > 0">
+				<label for="id">Código:</label>
+				<input type="number" class="form-control" id="id" placeholder="#" data-ng-model="id" disabled>
+			</div>
+			<div class="form-group">
+				<label for="name">Nome:</label>
+				<input type="text" class="form-control" id="name" placeholder="Nome da categoria" data-ng-model="name" required>
+			</div>
+			<div class="form-group">
+				<label for="description">Descrição:</label>
+				<input type="text" class="form-control" id="description" placeholder="Descrição da categoria" data-ng-model="description">
+			</div>
+		</form>
+	</div>
+</div>
+<div class="modal-footer" data-ng-hide="productForm.enabled">
+    <button class="btn btn-danger" type="button" data-ng-click="cancel()">Cancelar</button>
+    <button class="btn btn-primary" type="button" data-ng-click="saveCategory()">Gravar</button>
+</div>

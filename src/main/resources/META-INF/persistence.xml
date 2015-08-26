@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+     xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="ShoppingPU" transaction-type="JTA">
+    <jta-data-source>java:/ShoppingDS</jta-data-source>
+<!--     <jta-data-source>java:jboss/datasources/PostgreSQLDS</jta-data-source> -->
+	<class>com.trier.exam.shopping.model.Product</class>
+	<class>com.trier.exam.shopping.model.Category</class>
+	<class>com.trier.exam.shopping.model.Item</class>
+	<class>com.trier.exam.shopping.model.ProductList</class>
+	<exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties>
+	  <property name="hibernate.hbm2ddl.auto" value="update" /> <!-- create -->
+	  <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+	  <property name="hibernate.show_sql" value="true" />
+    </properties>
+  </persistence-unit>
+</persistence>

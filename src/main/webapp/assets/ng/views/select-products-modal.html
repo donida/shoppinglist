@@ -1,0 +1,96 @@
+<div class="modal-header">
+	<div class="row">
+		<div class="col-md-6">
+			<h3 class="modal-title" data-ng-hide="productForm.enabled">Selecione os produtos!</h3>
+			<h3 class="modal-title" data-ng-show="productForm.enabled && productForm.id == -1">Novo Produto</h3>
+			<h3 class="modal-title" data-ng-show="productForm.enabled && productForm.id > 0">Alterar Produto</h3>
+		</div>
+		<div class="col-md-6" data-ng-hide="productForm.enabled"><button class="btn btn-primary pull-right" type="button" data-ng-click="productForm.enabled = true; productForm.id = -1;">Novo Produto</button></div>
+	</div>
+</div>
+<div class="modal-body">
+  	<div class="row" data-ng-show="productForm.messages.length" data-ng-click="productForm.messages.splice(0,productForm.messages.length)">
+  		<div class="col-md-12" data-ng-repeat="message in productForm.messages">
+	  		<span class="col-xs-12" data-ng-class="{'alert alert-danger': message.danger, 'alert alert-success': message.success}" > {{ message.text }}</span>
+		  	<br class="clearfix">
+  		</div>
+  	</div>
+	<div data-ng-show="productForm.enabled">
+	    <div class="form-group">
+	    	<div>
+	    		<img alt="Imagem Produto..." class="list-thumbnail" data-ng-src="{{ productForm.filename }}" data-ng-if="productForm.filename">
+	    		<p data-ng-if="!productForm.filename"> Nenhuma imagem selecionada... </p>
+	    	</div>
+	    	<div>
+	    		<button class="btn btn-primary" data-ng-click="loadFile();">Enviar Imagem</button>
+	    	</div>
+		</div>
+		<!-- new/edit form -->
+		<form action="#" role="form">
+			<div class="form-group" data-ng-show="productForm.id > 0">
+				<label for="id">Código:</label>
+				<input type="number" class="form-control" id="id" placeholder="#" data-ng-model="productForm.id" disabled>
+			</div>
+			<div class="form-group">
+				<label for="name">Nome:</label>
+				<input type="text" class="form-control" id="name" placeholder="Nome do produto" data-ng-model="productForm.name" required>
+			</div>
+			<div class="form-group">
+				<label for="description">Descrição:</label>
+				<input type="text" class="form-control" id="description" placeholder="Descrição do produto" data-ng-model="productForm.description">
+			</div>
+			<div class="form-group">
+				<label for="description">Valor:</label>
+				<input type="number" class="form-control" id="value" placeholder="Descrição do produto" data-ng-model="productForm.value">
+			</div>
+			<div class="form-group" >
+				<button type="button" class="btn btn-danger" data-ng-click="productForm.enabled = false; productForm.id = -1;">Cancelar</button>
+				<button type="button" class="btn btn-success" data-ng-click="saveProduct();">Gravar</button>
+			</div>
+		</form>
+	</div>
+	<!-- list items -->
+	<div data-ng-hide="productForm.enabled">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>
+						<a href="#" data-ng-click="selectAll();$event.stopPropagation();">
+							<span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+						</a>
+					</th>
+					<th>#</th>
+					<th>Foto</th>
+					<th>Produto</th>
+					<th>Valor</th>
+					<th>Ações</th>
+				</tr>
+				<tr data-ng-repeat="item in items track by item.id" data-ng-click="toogleItem(item)" 
+				class="select-product-row" data-ng-class="{selected: item.selected}">
+					<td>
+						<span class="glyphicon glyphicon-unchecked" aria-hidden="true" data-ng-hide="item.selected"></span>
+						<span class="glyphicon glyphicon-check" aria-hidden="true" data-ng-show="item.selected"></span>
+					</td>
+					<td>{{ item.id }}</td>
+					<td>
+						<img alt="Foto Produto" class="list-thumbnail" data-ng-src="{{ item.filename }}" data-ng-if="item.filename">
+					</td>
+					<td>{{ item.name }}</td>
+					<td>
+						<span class="pull-right">R$ {{ item.value }}</span>
+					</td>
+					<td class="table-action-cell">
+						<button type="button" class="btn btn-success" data-ng-click="editProduct(item);$event.stopPropagation();">Editar</button>
+						<button type="button" class="btn btn-danger" data-ng-click="deleteProduct(item);$event.stopPropagation();">Apagar</button>
+					</td>
+				</tr>
+			</thead>
+		</table>
+		<br>
+    	Selecionados: | <b data-ng-repeat="item in items | filter: selectedItensFilter track by item.name">{{ item.name }} | </b>
+	</div>
+</div>
+<div class="modal-footer" data-ng-hide="productForm.enabled">
+    <button class="btn btn-danger" type="button" data-ng-click="cancel()">Cancelar</button>
+    <button class="btn btn-primary" type="button" data-ng-click="ok()">Enviar</button>
+</div>

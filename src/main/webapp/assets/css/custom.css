@@ -1,0 +1,81 @@
+h1, h2, h3, h4, h5, p, span, input, a, ul, li, .btn {
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+th {
+	text-align: center;
+}
+
+footer {
+	text-align: center;
+}
+
+.angular-main-container {
+	margin-top: 65px;
+}
+
+.jumbotron .container {
+    padding-top: 25px;
+}
+
+.jumbotron li {
+	border: 0px;
+	background-color: #eee;
+}
+
+.jumbotron li .glyphicon-ok {
+	color: #128A09;
+}
+
+.create-new-about-box {
+	background-color: #C3DFFD;
+    padding: 10px;
+}
+
+.search-about-box {
+	background-color: #FBFBC9;	
+    padding: 10px;
+}
+
+.home-header-img {
+	max-height: 200px;
+	padding: 15px;
+}
+
+.select-product-row.selected {
+	background-color: rgba(199, 245, 204, 0.5);
+}
+
+.select-product-row:hover {
+	cursor: pointer; 
+	cursor: hand;
+	background-color: rgba(7,7,7, 0.3);
+}
+
+.delete-item-icon:hover {
+	cursor: pointer; 
+	cursor: hand;
+	color: rgba(C1,1A,1A, 0.3);
+}
+
+.product-list-item-value:hover {
+	background-color: rgba(199, 245, 204, 0.5);
+}
+
+.product-list-item-value input {
+	max-width: 200px;
+}
+
+.productlist-inputgroup {
+	width: 100%;
+}
+
+.table-action-cell {
+	text-align: right;
+}
+
+.list-thumbnail {
+	max-height: 180px;
+	max-width: 180px;
+}
+
